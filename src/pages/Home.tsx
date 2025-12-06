@@ -1,0 +1,55 @@
+import { useNavigate } from 'react-router-dom';
+
+export default function Home() {
+  const nav = useNavigate();
+
+  return (
+    <div className="home-layout">
+      <div className="home-topbar">
+        <button
+          className="home-link-btn"
+          onClick={() => {
+            window.location.href = 'mailto:smartsoil@example.com';
+          }}
+        >
+          Contact us
+        </button>
+      </div>
+
+      <div className="home-hero">
+        <div className="home-hero-text">
+          <h2 className="home-eyebrow">SmartSoil</h2>
+          <h1 className="home-title">
+            Grow Smarter, Harvest Better –<br />
+            Monitor Your Soil in Real-Time
+          </h1>
+          <p className="home-subtitle">
+            An IoT-driven portable device designed to monitor soil health
+            parameters like moisture, temperature, EC, pH and NPK in real-time,
+            helping home gardeners and researchers make data-driven decisions.
+          </p>
+
+          <div className="home-cta-row">
+            <button className="home-cta-btn" onClick={() => nav('/dashboard')}>
+              Open Dashboard
+            </button>
+            <span className="home-cta-note">
+              View live readings from your ESP32 SmartSoil node.
+            </span>
+          </div>
+        </div>
+
+        <div className="home-hero-card">
+          <div className="home-hero-card-inner">
+            <div className="home-hero-tag">Device Preview</div>
+            <div className="home-hero-picture-text">SMARTSOIL PICTURE</div>
+            <p className="home-hero-picture-sub">
+              Replace this area with a render or photo of your SmartSoil setup
+              in your final version.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
