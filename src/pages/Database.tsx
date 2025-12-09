@@ -1,5 +1,5 @@
 // src/pages/Database.tsx
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import * as XLSX from "xlsx";
 
@@ -10,7 +10,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 const supabase: SupabaseClient = createClient(supabaseUrl, supabaseAnonKey);
 
-type SensRow = {
+interface SensRow {
   id: string;
   bkt_30m: string | null;
   dev_id: string | null;
@@ -25,7 +25,7 @@ type SensRow = {
   n_mgkg: number | null;
   p_mgkg: number | null;
   k_mgkg: number | null;
-};
+}
 
 function formatNumber(val: number | null | undefined) {
   if (val === null || val === undefined) return "-";
@@ -48,7 +48,7 @@ const ALLOWED_SORT_COLUMNS = [
 export default function DatabaseTable(): JSX.Element {
   const [rows, setRows] = useState<SensRow[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [page, setPage] = useState<number>(0);
+
   const [total, setTotal] = useState<number | null>(null);
 
   const [search, setSearch] = useState<string>("");
@@ -88,7 +88,7 @@ export default function DatabaseTable(): JSX.Element {
           : "bkt_30m";
 
         let query = supabase
-          .from<SensRow>("sens_rdg_with_device")
+          .from("sens_rdg_with_device")
           .select(selectColumns, { count: "exact" })
           .gte("bkt_30m", getTimeThreshold(timeFilter))
           .order(sortCol, { ascending: sortBy.asc });
@@ -97,12 +97,17 @@ export default function DatabaseTable(): JSX.Element {
           query = query.ilike("crop_text", `%${search.trim()}%`);
         }
 
-        // row limiter
         if (rowLimit !== "all") {
           query = query.limit(rowLimit);
         }
 
-        const { data, count, error } = await query;
+        // execute query
+        const res = await query;
+        // res has .data, .count, .error — narrow them explicitly:
+        const data = res.data as SensRow[] | null;
+        const count = (res as any).count as number | null;
+        const error = (res as any).error;
+
         if (error) throw error;
 
         if (!cancelled) {
@@ -126,7 +131,7 @@ export default function DatabaseTable(): JSX.Element {
   async function downloadAllExcel() {
     try {
       let query = supabase
-        .from<SensRow>("sens_rdg_with_device")
+        .from("sens_rdg_with_device")
         .select(selectColumns)
         .gte("bkt_30m", getTimeThreshold(timeFilter));
 
@@ -142,10 +147,12 @@ export default function DatabaseTable(): JSX.Element {
         ? sortBy.col
         : "bkt_30m";
 
-      const { data, error } = await query.order(sortCol, {
+      const res = await query.order(sortCol, {
         ascending: sortBy.asc,
       });
 
+      const data = res.data as SensRow[] | null;
+      const error = (res as any).error;
       if (error) throw error;
 
       const normalized = (data ?? []).map((r) => ({
@@ -220,11 +227,16 @@ export default function DatabaseTable(): JSX.Element {
           <option value="100">First 100</option>
         </select>
 
-        <button className="btn" onClick={downloadAllExcel}> Export ↗</button>
+        <button className="btn" onClick={downloadAllExcel}>
+          Export ↗
+        </button>
 
         <button
           className="btn-secondary"
-          onClick={() => window.location.reload()}> Refresh </button>
+          onClick={() => window.location.reload()}
+        >
+          Refresh
+        </button>
 
         <div className="info">{loading ? "Loading..." : `${rows.length} rows`}</div>
       </div>
@@ -254,7 +266,9 @@ export default function DatabaseTable(): JSX.Element {
             {rows.map((r, idx) => (
               <tr key={r.id} className={idx % 2 === 0 ? "row-even" : "row-odd"}>
                 <td className="td">{idx + 1}</td>
-                <td className="td">{r.bkt_30m ? new Date(r.bkt_30m).toLocaleString() : "-"}</td>
+                <td className="td">
+                  {r.bkt_30m ? new Date(r.bkt_30m).toLocaleString() : "-"}
+                </td>
                 <td className="td">{r.device_name ?? r.dev_id ?? "-"}</td>
                 <td className="td">{r.crop_text ?? r.crop ?? "-"}</td>
                 <td className="td">{formatNumber(r.ph)}</td>

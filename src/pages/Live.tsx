@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { sb } from '../SBClient';
 import type { Crop, Dev, TelemRow } from '../type';
 import {
-  LineChart,
   Line,
   XAxis,
   YAxis,
@@ -303,9 +302,6 @@ function buildAltReco(): string {
 
     const thr = thrMap[p.key as string]; // Get threshold data for the parameter
     if (!thr) return; // Skip if no threshold is found for this parameter
-
-    const min = thr.val_min;
-    const max = thr.val_max;
 
     // Alternative crop logic for soil moisture (moist_pct)
     if (p.key === 'moist_pct') {
