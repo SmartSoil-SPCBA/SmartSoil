@@ -1,16 +1,9 @@
-// src/pages/Analytics.tsx
-// Analytics over 30-min logs (sens_rdg_30m).
-// - User selects crop + time window.
-// - We load hist rdgs from sens_rdg_30m.
-// - We compute min/max/avg/latest per param.
-// - We draw charts for key params.
 
 import { useEffect, useMemo, useState } from 'react';
 import { sb } from '../SBClient';
 import type { Crop } from '../type';
 
 import {
-  LineChart,
   Line,
   XAxis,
   YAxis,
@@ -20,16 +13,7 @@ import {
   AreaChart,
   Area,
   BarChart,
-  Bar,
-  PieChart,
-  Pie,
-  Cell,
-  RadarChart,
-  Radar,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  CartesianGrid
+  Bar
 } from 'recharts';
 
 // Hist row type (sens_rdg_30m)
