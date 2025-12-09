@@ -1,5 +1,5 @@
 // src/pages/Database.tsx
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import * as XLSX from "xlsx";
 
@@ -45,7 +45,7 @@ const ALLOWED_SORT_COLUMNS = [
   "k_mgkg",
 ];
 
-export default function DatabaseTable(): JSX.Element {
+export default function DatabaseTable(): React.JSX.Element {
   const [rows, setRows] = useState<SensRow[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
