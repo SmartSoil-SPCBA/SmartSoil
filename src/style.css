@@ -865,7 +865,7 @@ a { color: inherit; text-decoration: none; }
     font-size: 1.8rem;
   }
 
-  .nav-link-active .material-icons { color: var(--white); }
+  .nav-link-active .material-icons { color: var(--white) !important; }
 
   .inner-bar{
     display: flex;
