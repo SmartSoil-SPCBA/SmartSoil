@@ -796,11 +796,9 @@ a { color: inherit; text-decoration: none; }
    ----------------------------------------------------------------------------------------- 
 */
 @media (max-width: 768px) {
-
-  .
   
   .sidebar-container{
-    margin: 0;
+    margin: 0;git 
   }
  .sidebar-logo-mark {
     font-size: 1.5rem;
