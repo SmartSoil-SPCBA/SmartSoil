@@ -796,6 +796,8 @@ a { color: inherit; text-decoration: none; }
    ----------------------------------------------------------------------------------------- 
 */
 @media (max-width: 768px) {
+
+  .
   
   .sidebar-container{
     margin: 0;
@@ -888,6 +890,7 @@ a { color: inherit; text-decoration: none; }
 
 
   .app{
+    height: 100 dvh;
     display: flex;
     flex-direction: column;
   }
