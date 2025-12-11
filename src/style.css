@@ -890,7 +890,6 @@ a { color: inherit; text-decoration: none; }
 
 
   .app{
-    height: 100 dvh;
     display: flex;
     flex-direction: column;
   }
