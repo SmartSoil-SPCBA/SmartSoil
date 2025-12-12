@@ -45,12 +45,10 @@ export default function Live() {
   const [telem, setTelem] = useState<TelemRow | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // State for threshold map and alternative crop recommendations
   const [thrMap, setThrMap] = useState<Record<string, ThrRow>>({});
   const [altCropRecommendations, setAltCropRecommendations] = useState<any[]>([]);
   const [chartData, setChartData] = useState<any[]>([]);
 
-  // 1) Load dev row once (id + cur_crop)
   useEffect(() => {
     (async () => {
       const { data: devData, error } = await sb
@@ -77,7 +75,6 @@ export default function Live() {
     })();
   }, []);
 
-  // 2) Handle crop change (update device.cur_crop in DB)
   async function handleCropChange(newCrop: Crop) {
     setCrop(newCrop);
     if (!dev) return;
@@ -92,7 +89,7 @@ export default function Live() {
     }
   }
 
-  // 3) Load latest rt telem row for selected crop from telem_rt
+  // latest rt telem row for selected crop from telem_rt
   useEffect(() => {
     let cancelled = false;
 
@@ -119,7 +116,7 @@ export default function Live() {
     };
   }, [crop]);
 
-  // 4) Subscribe to realtime changes in telem_rt
+  // Subscribe to realtime changes in telem_rt
   useEffect(() => {
     const channel = sb
       .channel('telem_rt_stream')
@@ -150,7 +147,7 @@ export default function Live() {
     };
   }, [crop]);
 
-  // 5) Load thr cfg for selected crop from crop_thr
+  // Load thr cfg for selected crop from crop_thr
   useEffect(() => {
     let cancelled = false;
 
@@ -186,7 +183,6 @@ export default function Live() {
     };
   }, [crop]);
 
-  // 6) Fetch alternative crop recommendations from the database
   useEffect(() => {
     async function fetchAltCropData() {
       try {

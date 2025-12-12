@@ -6,14 +6,10 @@ export default function Home() {
   return (
     <div className="home-layout">
       <div className="home-topbar">
-        <button
-          className="home-link-btn"
-          onClick={() => {
-            window.location.href = 'mailto:smartsoil@example.com';
-          }}
-        >
-          Contact us
-        </button>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=developer@gmail.com&su=SmartSoil Support Request&body=Hello, I need help with..."
+           target="_blank" rel="noopener noreferrer">
+          <button className="home-link-btn">Contact Us</button>
+        </a>
       </div>
 
       <div className="home-hero">
