@@ -269,11 +269,11 @@ export default function Live() {
       // Check if the parameter is out of range
       if (numVal < min) {
         issues.push(
-          `• ${p.label} is LOW (${numVal}${unit ? ' ' + unit : ''}; optimal ${min}–${max} ${unit}). ${baseDesc}<br>`
+          `<li>• ${p.label} is LOW (${numVal}${unit ? ' ' + unit : ''}; optimal ${min}–${max} ${unit}). ${baseDesc}</li>`
         );
       } else if (numVal > max) {
         issues.push(
-          `• ${p.label} is HIGH (${numVal}${unit ? ' ' + unit : ''}; optimal ${min}–${max} ${unit}). ${baseDesc}<br>`
+          `<li> • ${p.label} is HIGH (${numVal}${unit ? ' ' + unit : ''}; optimal ${min}–${max} ${unit}). ${baseDesc}</li>`
         );
       }
     });
@@ -429,9 +429,9 @@ function buildAltReco(): string {
         <div className="inner-reco-grid">
           <div className="reco-card">
             <div className="reco-title">Crop-Specific Treatment</div>
-              <p className="reco-body">
+              <ul className="reco-body">
                 {buildCropReco()}
-              </p>
+              </ul>
           </div>
           <div className="reco-card">
             <div className="reco-title">Alternative Crop</div>
