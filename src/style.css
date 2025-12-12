@@ -577,6 +577,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .reco-body {
+  white-space: pre-line;
   font-size: 0.9rem;
   color: var(--black);
   line-height: 1.4;
