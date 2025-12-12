@@ -1,4 +1,3 @@
-
 import { useEffect, useMemo, useState } from 'react';
 import { sb } from '../SBClient';
 import type { Crop } from '../type';
@@ -67,7 +66,7 @@ export default function Analytics() {
 
   
 
-  // 1) Load hist rows when crop or win changes
+  // Load hist rows when crop or win changes
   useEffect(() => {
     (async () => {
       setLoading(true);
@@ -135,7 +134,7 @@ export default function Analytics() {
   
   const graphData = useMemo(() => {
     return stats.map((s) => ({
-      label: s.label, // The label for each parameter
+      label: s.label,
       min: s.min ?? 0,
       max: s.max ?? 0,
       avg: s.avg ?? 0,

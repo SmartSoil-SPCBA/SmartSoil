@@ -187,7 +187,7 @@ export default function Live() {
     async function fetchAltCropData() {
       try {
         const { data, error } = await sb
-          .from('alt_crop_reco') // Use the updated table name
+          .from('alt_crop_reco')
           .select('*');
 
         if (error) {
@@ -237,9 +237,7 @@ export default function Live() {
     ? new Date(telem.upd_at).toLocaleString()
     : 'No data yet';
 
-  // --- Recommendation helpers ---
-
-  // Build text summary for crop-specific treatment (bullet points)
+  // Build text summary for crop-specific treatment
   function buildCropReco(): string {
     if (!telem) {
       return 'Waiting for real-time sensor data. Once readings are available, this area will highlight which parameters are below or above the optimal range for the selected crop.';
@@ -254,8 +252,8 @@ export default function Live() {
 
       if (numVal === null || Number.isNaN(numVal)) return;
 
-      const thr = thrMap[p.key as string];  // Get thresholds for the parameter
-      if (!thr) return; // no threshold configured for this param
+      const thr = thrMap[p.key as string];
+      if (!thr) return;
 
       const min = thr.val_min;
       const max = thr.val_max;
@@ -296,12 +294,12 @@ function buildAltReco(): string {
     const rawVal = telem[p.key] as any;
     const numVal = rawVal !== null && rawVal !== undefined ? Number(rawVal) : null;
 
-    if (numVal === null || Number.isNaN(numVal)) return;  // Skip if value is invalid
+    if (numVal === null || Number.isNaN(numVal)) return;
 
-    const thr = thrMap[p.key as string]; // Get threshold data for the parameter
-    if (!thr) return; // Skip if no threshold is found for this parameter
+    const thr = thrMap[p.key as string];
+    if (!thr) return;
 
-    // Alternative crop logic for soil moisture (moist_pct)
+    // Alternative crop logic for soil moisture
     if (p.key === 'moist_pct') {
       if (numVal < 40) { // If moisture is below 40% (dry)
         const altCrop = altCropRecommendations.find(
@@ -353,7 +351,6 @@ function buildAltReco(): string {
 
   return (
     <>
-      {/* Ctrl bar */}
       <div className="row">
         <span className="status-chip">
           <span className="status-dot" />
@@ -374,7 +371,6 @@ function buildAltReco(): string {
           </select>
         </div>
 
-        {/* Info when no rt data yet */}
         {!telem && (
           <div style={{ fontSize: 13, color: '#9ca3af' }}>
             Waiting for real-time data… Make sure your ESP32 is sending readings to the <code>ingest</code> function and that{' '}
@@ -383,7 +379,6 @@ function buildAltReco(): string {
         )}
       </div>
 
-      {/* Live bar cards */}
       <div className="bars-wrapper">
         {PARAMS.map(p => {
           const rawVal = telem?.[p.key] as any;
@@ -422,7 +417,7 @@ function buildAltReco(): string {
         })}
       </div>
 
-      {/* Recommendation section */}
+
       <div className="reco-grid">
         <div className="inner-reco-grid">
           <div className="reco-card">
@@ -435,7 +430,6 @@ function buildAltReco(): string {
           </div>
         </div>
 
-        {/* ANALYTICS OVERVIEW SECTION */}
         <div className="an-chart-card-overview">
           <div className="an-chart-title-overview">Analytics Overview</div>
           <div className="an-chart-inner-overview">
