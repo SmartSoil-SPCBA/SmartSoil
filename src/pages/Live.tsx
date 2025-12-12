@@ -269,11 +269,11 @@ export default function Live() {
       // Check if the parameter is out of range
       if (numVal < min) {
         issues.push(
-          `• ${p.label} is LOW (${numVal}${unit ? ' ' + unit : ''}; optimal ${min}–${max} ${unit}). ${baseDesc}`
+          `<br>• ${p.label} is LOW (${numVal}${unit ? ' ' + unit : ''}; optimal ${min}–${max} ${unit}). ${baseDesc}</br>`
         );
       } else if (numVal > max) {
         issues.push(
-          `• ${p.label} is HIGH (${numVal}${unit ? ' ' + unit : ''}; optimal ${min}–${max} ${unit}). ${baseDesc}`
+          `<br>• ${p.label} is HIGH (${numVal}${unit ? ' ' + unit : ''}; optimal ${min}–${max} ${unit}). ${baseDesc}</br>`
         );
       }
     });
